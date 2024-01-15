@@ -1,0 +1,78 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Declara as variáveis para guardar as informações do estacionamento
+        string precoInicial;
+        string precoPorHora;
+        List<string> veiculos = new List<string>();
+
+        // Obtém o preço inicial e o preço por hora do estacionamento
+        Console.WriteLine("Digite o preço inicial do estacionamento:");
+        precoInicial = Console.ReadLine();
+        Console.WriteLine("Digite o preço por hora do estacionamento:");
+        precoPorHora = Console.ReadLine();
+
+        // Laço de repetição para gerenciar as operações do estacionamento
+        while (true)
+        {
+            // Exibe o menu de opções
+            Console.WriteLine("Selecione uma opção:");
+            Console.WriteLine("1 - Adicionar veículo");
+            Console.WriteLine("2 - Remover veículo");
+            Console.WriteLine("3 - Listar veículos");
+            Console.WriteLine("4 - Encerrar");
+
+            // Obtém a opção do usuário
+            int opcao = Convert.ToInt32(Console.ReadLine());
+
+            // Implementa a ação correspondente à opção selecionada
+            switch (opcao)
+            {
+                case 1:
+                    // Adiciona um veículo ao estacionamento
+                    Console.WriteLine("Digite a placa do veículo:");
+                    string placa = Console.ReadLine();
+                    veiculos.Add(placa);
+                    break;
+                case 2:
+                    // Remove um veículo do estacionamento
+                    Console.WriteLine("Digite a placa do veículo:");
+                    placa = Console.ReadLine();
+                    if (veiculos.Contains(placa))
+                    {
+                        // Calcula o valor cobrado
+                        DateTime entrada = DateTime.Now;
+                        DateTime saida = DateTime.Parse(Console.ReadLine());
+                        int horas = (saida - entrada).TotalHours;
+                        float valor = horas * Convert.ToSingle(precoPorHora);
+
+                        // Exibe o valor cobrado
+                        Console.WriteLine("Valor cobrado: R$ {0:0.2f}", valor);
+
+                        // Remove o veículo da lista
+                        veiculos.Remove(placa);
+                    }
+                    else
+                    {
+                        // Exibe uma mensagem de erro
+                        Console.WriteLine("Placa não encontrada.");
+                    }
+                    break;
+                case 3:
+                    // Lista os veículos estacionados
+                    Console.WriteLine("Veículos estacionados:");
+                    foreach (string placa in veiculos)
+                    {
+                        Console.WriteLine(placa);
+                    }
+                    break;
+                case 4:
+                    // Encerra o programa
+                    return;
+            }
+        }
+    }
+}
